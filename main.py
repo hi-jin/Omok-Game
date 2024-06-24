@@ -90,4 +90,4 @@ def spawn_games(
 
 
 if __name__ == "__main__":
-    spawn_games([8000, 8001], "real")
+    spawn_games([8000], "real")

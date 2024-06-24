@@ -24,9 +24,10 @@ BOARD = [[STONE_EMPTY for _ in range(GAME_SIZE)] for _ in range(GAME_SIZE)]
 def reset_game(
     screen_mode: Literal["real", "virtual"],
 ):
-    global SCREEN, GAME_STATUS
+    global SCREEN, GAME_STATUS, BOARD
     if SCREEN is None:
         SCREEN = create_screen(screen_mode)
+    BOARD = [[STONE_EMPTY for _ in range(GAME_SIZE)] for _ in range(GAME_SIZE)]
     draw_board(SCREEN)
     GAME_STATUS = "black_turn"
 
