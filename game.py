@@ -117,6 +117,10 @@ def get_game_status():
     return GAME_STATUS
 
 
+def get_board():
+    return BOARD
+
+
 def update_game_status():
     global GAME_STATUS
     who_win = _check_gomoku_win()

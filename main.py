@@ -1,4 +1,4 @@
-from game import reset_game, put_stone, update_game_status, get_game_status, BOARD, render
+from game import reset_game, put_stone, update_game_status, get_game_status, get_board, render
 import socket
 from communicate import decode_message
 from typing import Literal, List
@@ -22,11 +22,11 @@ def game_loop(
 
     while True:
         if screen_mode == "real":
-            time.sleep(0.5)
+            time.sleep(0.3)
         render()
         message, addr = sock.recvfrom(2048)
         message = message.decode()
-        print(f"server received {message}")
+        # print(f"server received {message}")
         cmd, args = decode_message(message)
 
         match cmd:
@@ -38,7 +38,7 @@ def game_loop(
                 else:
                     raise ValueError("neither black nor white")
                 if black_addr is not None and white_addr is not None:
-                    sock.sendto(f"obs {BOARD}".encode(), black_addr)
+                    sock.sendto(f"obs {get_board()}".encode(), black_addr)
             case "put":
                 if black_addr is None or white_addr is None:
                     raise RuntimeError("black or white isn't registered")
@@ -58,24 +58,24 @@ def game_loop(
                 update_game_status()
                 match get_game_status():
                     case "black_turn":
-                        sock.sendto(f"obs {BOARD}".encode(), black_addr)
+                        sock.sendto(f"obs {get_board()}".encode(), black_addr)
                     case "white_turn":
-                        sock.sendto(f"obs {BOARD}".encode(), white_addr)
+                        sock.sendto(f"obs {get_board()}".encode(), white_addr)
                     case "draw":
                         sock.sendto(f"draw".encode(), black_addr)
                         sock.sendto(f"draw".encode(), white_addr)
                         reset_game(screen_mode)
-                        sock.sendto(f"obs {BOARD}".encode(), black_addr)
+                        sock.sendto(f"obs {get_board()}".encode(), black_addr)
                     case "black_win":
                         sock.sendto(f"win".encode(), black_addr)
                         sock.sendto(f"lose".encode(), white_addr)
                         reset_game(screen_mode)
-                        sock.sendto(f"obs {BOARD}".encode(), black_addr)
+                        sock.sendto(f"obs {get_board()}".encode(), black_addr)
                     case "white_win":
                         sock.sendto(f"win".encode(), white_addr)
                         sock.sendto(f"lose".encode(), black_addr)
                         reset_game(screen_mode)
-                        sock.sendto(f"obs {BOARD}".encode(), black_addr)
+                        sock.sendto(f"obs {get_board()}".encode(), black_addr)
 
 
 def spawn_games(
