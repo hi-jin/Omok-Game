@@ -24,7 +24,7 @@ def game_loop(
     while True:
         if screen_mode == "real":
             time.sleep(0.3)
-        render()
+            render()
         message, addr = sock.recvfrom(2048)
         message = message.decode()
         # print(f"server received {message}")

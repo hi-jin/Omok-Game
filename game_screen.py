@@ -37,14 +37,7 @@ def create_screen(
 
 
 def render():
-    try:
-        pygame.display.flip()
-    except pygame.error as e:
-        if str(e) == "Display mode not set":
-            # maybe expected (may use virtual display)
-            pass
-        else:
-            raise e
+    pygame.display.flip()
 
 
 def draw_board(
