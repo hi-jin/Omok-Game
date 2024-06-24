@@ -4,6 +4,7 @@ from communicate import decode_message
 from typing import Literal, List
 import multiprocessing
 import time
+from argparse import ArgumentParser
 
 
 def game_loop(
@@ -90,4 +91,8 @@ def spawn_games(
 
 
 if __name__ == "__main__":
-    spawn_games([8000], "real")
+    parser = ArgumentParser()
+    parser.add_argument("--port", type=int, required=True)
+    args = parser.parse_args()
+
+    spawn_games([args.port], "real")
