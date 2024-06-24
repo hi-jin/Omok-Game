@@ -65,14 +65,17 @@ def game_loop(
                         sock.sendto(f"draw".encode(), black_addr)
                         sock.sendto(f"draw".encode(), white_addr)
                         reset_game(screen_mode)
+                        sock.sendto(f"obs {BOARD}".encode(), black_addr)
                     case "black_win":
                         sock.sendto(f"win".encode(), black_addr)
                         sock.sendto(f"lose".encode(), white_addr)
                         reset_game(screen_mode)
+                        sock.sendto(f"obs {BOARD}".encode(), black_addr)
                     case "white_win":
                         sock.sendto(f"win".encode(), white_addr)
                         sock.sendto(f"lose".encode(), black_addr)
                         reset_game(screen_mode)
+                        sock.sendto(f"obs {BOARD}".encode(), black_addr)
 
 
 def spawn_games(
