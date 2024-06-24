@@ -93,6 +93,7 @@ def spawn_games(
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--port", type=int, required=True)
+    parser.add_argument("--screen-mode", type=str, required=True)
     args = parser.parse_args()
 
-    spawn_games([args.port], "real")
+    spawn_games([args.port], args.screen_mode)
